@@ -1,5 +1,6 @@
 import express,{Request,Response} from "express";
 import { Product ,ProductStore} from "../models/product";
+import verifyAuthToken from "../middlewares/auth";
 
 const myProduct=new ProductStore();
 
@@ -8,16 +9,16 @@ const index = async (_req:Request,res:Response)=>{
     res.json(products);
 }
 const show =async (req:Request,res:Response)=>{
-    const product= await myProduct.show(req.body.id);
+    const product= await myProduct.show(parseInt(req.params.id));
     res.json(product);
 }
 const create =async (req:Request,res:Response)=>{
+    const product:Product={
+        //id:req.body.id,
+        pname:req.body.pname,
+        price:req.body.price
+    }
     try{
-        const product:Product={
-            id:req.body.id,
-            name:req.body.name,
-            price:req.body.price
-        }
         const newProduct=await myProduct.create(product);
         res.json(newProduct);
     }

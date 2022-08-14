@@ -6,6 +6,7 @@ import OrdersRoute from './handlers/orders'
 
 const app: express.Application = express()
 //const address: string = "0.0.0.0:3000"
+const port=process.env.PORT;
 
 app.use(bodyParser.json())
 
@@ -17,6 +18,6 @@ ProductsRoute(app);
 UsersRoute(app);
 OrdersRoute(app);
 
-app.listen(3000, function () {
-    console.log('Server start listening on port: 3000');
+app.listen(port, function () {
+    console.log(`Server start listening on port: ${port}`);
 })

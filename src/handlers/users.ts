@@ -9,7 +9,7 @@ const index = async (_req:Request,res:Response)=>{
     res.json(users);
 }
 const show =async (req:Request,res:Response)=>{
-    const user= await myUser.show(parseInt(req.params.id));
+    const user= await myUser.show(req.params.id);
     res.json(user);
 }
 const create =async (req:Request,res:Response)=>{
@@ -28,9 +28,26 @@ const create =async (req:Request,res:Response)=>{
         res.status(400).json(err);
     }
 }
+const destroy=async(req:Request,res:Response)=>{
+    const user=await myUser.delete(req.params.id);
+    res.json(user);
+}
+const update=async (req:Request,res:Response)=>{
+    //const pID=parseInt(req.params.id);
+    try{
+        const user=await myUser.show(req.params.id);
+        const updatedUSer=await myUser.update(user,req.body);
+        res.json(updatedUSer);
+    }
+    catch(err){
+        res.json(err)
+    }
+}
 const UsersRoute =(app:express.Application)=>{
     app.get('/users',index);
     app.get('/users/:id',show);
-    app.post('/users',create)
+    app.post('/users',create);
+    app.delete('/users/:id',destroy);
+    app.patch('/users/:id',update)
 }
 export default UsersRoute;

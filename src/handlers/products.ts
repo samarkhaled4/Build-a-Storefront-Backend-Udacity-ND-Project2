@@ -44,7 +44,7 @@ const update=async (req:Request,res:Response)=>{
 const ProductsRoute =(app:express.Application)=>{
     app.get('/products',index);
     app.get('/products/:id',show);
-    app.post('/products',create);
+    app.post('/products',verifyAuthToken,create);
     app.delete('/products/:id',destroy);
     app.patch('/products/:id',update);
 }

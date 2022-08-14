@@ -13,7 +13,7 @@ const {
     //POSTGRES_PORT
 } = process.env;
 
-let Client;
+let Client :Pool;
 console.log(ENV);
 
 if(ENV==='test'){
@@ -24,7 +24,7 @@ if(ENV==='test'){
         password:POSTGRES_PASSWORD,
     })
 }
-if(ENV==='dev'){
+else{
     Client=new Pool({
         host:POSTGRES_HOST,
         database:POSTGRES_DB,

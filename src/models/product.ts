@@ -36,7 +36,6 @@ export class ProductStore {
     }
     async create(p:Product):Promise<Product>{
         try{
-            console.log(p)
             const conn=await Client.connect();
             const sql='INSERT INTO products (pname,price) VALUES ($1,$2) RETURNING *';
             const result=await conn.query(sql,[p.pname,p.price]);
@@ -66,7 +65,7 @@ export class ProductStore {
             let pr :number|null;
             name=values.pname ? values.pname : null;
             pr=values.price ? values.price : null;
-            const sql='UPDATE products SET pname=COALESCE($1,pname),price=COALESCE($2,price) WHERE id=${p.id} RETURNING *';
+            const sql=`UPDATE products SET pname=COALESCE($1,pname),price=COALESCE($2,price) WHERE id=${p.id} RETURNING *`;
             const result=await conn.query(sql,[name,pr]);
             conn.release();
             return result.rows[0];

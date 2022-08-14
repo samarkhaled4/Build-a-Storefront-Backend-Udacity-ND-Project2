@@ -74,7 +74,7 @@ export class UserStore {
             fname=values.firstname ? values.firstname : null;
             lname=values.lastname ? values.lastname : null;
             //pass=values.password ? values.password : null;
-            const sql='UPDATE users SET firstname=COALESCE($1,firstname),lastname=COALESCE($2,lastname) WHERE id=${u.id} RETURNING *';
+            const sql=`UPDATE users SET firstname=COALESCE($1,firstname),lastname=COALESCE($2,lastname) WHERE id=${u.id} RETURNING *`;
             const result=await conn.query(sql,[fname,lname]);
             conn.release();
             return result.rows[0];
@@ -82,4 +82,5 @@ export class UserStore {
         catch(err){
             throw new Error (`cannot update product ${u.id} .Error ${err}`)
         }
+    }
 }

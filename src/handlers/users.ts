@@ -4,7 +4,7 @@ import jwt,{JwtPayload} from "jsonwebtoken";
 import verifyAuthToken from "../middlewares/auth";
 
 const myUser=new UserStore();
-
+const tokenSecret=process.env.TOKEN_SECRET as string;
 const index = async (_req:Request,res:Response)=>{
     const users= await myUser.index();
     res.json(users);
@@ -13,7 +13,7 @@ const show =async (req:Request,res:Response)=>{
     try{
         const auth=req.headers.authorization as string;
         const token=auth.split(' ')[1]
-        const decoded=jwt.verify(token,process.env.TOKEN_SECRET as string) as JwtPayload;
+        const decoded=jwt.verify(token,tokenSecret) as JwtPayload;
         console.log(decoded)
         if(decoded.addUser.id===parseInt(req.params.id)){
             const user= await myUser.show(req.params.id);
@@ -38,7 +38,7 @@ const create =async (req:Request,res:Response)=>{
     }
     try{
         const newUser=await myUser.create(addUser);
-        var token=jwt.sign({addUser:newUser}, process.env.TOKEN_SECRET as string);
+        var token=jwt.sign({addUser:newUser}, tokenSecret);
         res.json(token);
     }
     catch(err){

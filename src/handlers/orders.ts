@@ -1,5 +1,6 @@
 import express,{Request,Response} from "express";
 import { Order,OrderStore } from "../models/order";
+import verifyAuthToken from "../middlewares/auth";
 
 const myOrder=new OrderStore();
 
@@ -26,8 +27,8 @@ const create=async(req:Request,res:Response)=>{
 }
 const addProduct=async(req:Request,res:Response)=>{
     const orderId:string=req.params.id;
-    const productId:string=req.body.id;
-    const quantity:number=parseInt(req.body.quatity);
+    const productId:string=req.body.product_id;
+    const quantity:number=parseInt(req.body.quantity);
     try{
         const addedProduct=await myOrder.addProduct(quantity,productId,orderId);
         res.json(addedProduct);
@@ -37,7 +38,7 @@ const addProduct=async(req:Request,res:Response)=>{
     }
 }
 const OrdersRoute = (app:express.Application)=>{
-    app.get('/orders',index);
+    app.get('/orders',verifyAuthToken,index);
     app.get('/orders/:id',show);
     app.post('/orders',create);
     app.post('/orders/:id/products',addProduct)

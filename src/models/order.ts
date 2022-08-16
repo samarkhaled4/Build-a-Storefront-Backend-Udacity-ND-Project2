@@ -4,11 +4,21 @@ export type Order ={
     id?:number,
     status:string,
     user_id:number,
-    product_id:number,
-    product_quantity:number
 }
 export class OrderStore {
-    async show(id:number):Promise<Order>{
+    async index():Promise<Order[]>{
+        try{
+            const conn=await Client.connect();
+            const sql='SELECT * FROM orders';
+            const result=await  conn.query(sql);
+            conn.release();
+            return result.rows;
+        }
+        catch(err){
+            throw new Error (`can;t index orders ${err}`)
+        }
+    }
+    async show(id:string):Promise<Order>{
         try{
             const conn=await Client.connect();
             const sql='SELECT * FROM orders WHERE user_id=($1)';
@@ -18,6 +28,30 @@ export class OrderStore {
         }
         catch(err){
             throw new Error (`cannot get order ${err}`)
+        }
+    }
+    async create(o:Order):Promise<Order>{
+        try{
+            const conn=await Client.connect();
+            const sql='INSERT INTO orders (status,user_id) VALUES ($1,$2) RETURNING *';
+            const result = await conn.query(sql,[o.status,o.user_id]);
+            conn.release();
+            return result.rows[0];
+        }
+        catch(err){
+            throw new Error (`cann't create order ${err}`)
+        }
+    }
+    async addProduct(quantity:number,productId:string,orderId:string){
+        try{
+            const conn=await Client.connect();
+            const sql='INSERT INTO order_products (order_id,product_id,quantity) VALUES ($1,$2,$3) RETURNING *';
+            const result=await conn.query(sql,[orderId,productId,quantity]);
+            conn.release();
+            return result.rows[0];
+        }
+        catch(err){
+            throw new Error (`cann;t add Product ${productId} to order ${orderId} .Error ${err}`)
         }
     }
 }

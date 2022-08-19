@@ -2,12 +2,15 @@
   "name": "build-a-storefront-backend-udacity-nd-project2",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/server.ts",
   "scripts": {
     "build": "npx tsc",
+    "jasmine":"jasmine",
+    "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
     "start": "nodemon src/server.ts",
-    "jasmine": "jasmine",
-    "test": "ENV=test db-migrate --env test up && jasmine-ts && db-migrate db:drop test"
+    "test": "cross-env NODE_ENV=test db-migrate --env test up && jasmine && db-migrate db:drop test",
+    "migrate": "db-migrate --env test up && db-migrate up",
+    "tsc": "tsc"
   },
   "repository": {
     "type": "git",
@@ -27,20 +30,22 @@
     "@types/jsonwebtoken": "^8.5.8",
     "@types/node": "^18.6.5",
     "@types/pg": "^8.6.5",
-    "bcrypt": "^5.0.1",
-    "db-migrate": "^0.11.13",
-    "db-migrate-pg": "^1.2.2",
-    "dotenv": "^16.0.1",
+    "cross-env": "^7.0.3",
     "jasmine": "^4.3.0",
     "jasmine-spec-reporter": "^7.0.0",
     "jsonwebtoken": "^8.5.1",
-    "nodemon": "^2.0.19",
     "ts-node": "^10.9.1",
+    "tsc-watch": "^5.0.3",
     "typescript": "^4.7.4"
   },
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.20.0",
+    "db-migrate": "^0.11.13",
+    "db-migrate-pg": "^1.2.2",
+    "dotenv": "^16.0.1",
     "express": "^4.18.1",
+    "nodemon": "^2.0.19",
     "pg": "^8.7.3"
   }
 }

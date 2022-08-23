@@ -8,7 +8,7 @@
     "jasmine":"jasmine",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
     "start": "nodemon src/server.ts",
-    "test": "cross-env NODE_ENV=test db-migrate --env test up && jasmine && db-migrate db:drop test",
+    "test": "npm run build && db-migrate db:create storefront_test && cross-env ENV=test db-migrate --env test up && jasmine && db-migrate db:drop storefront_test",
     "migrate": "db-migrate --env test up && db-migrate up",
     "tsc": "tsc"
   },
@@ -17,7 +17,7 @@
     "url": "git+https://github.com/samarkhaled4/Build-a-Storefront-Backend-Udacity-ND-Project2.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Samar Khaled",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/samarkhaled4/Build-a-Storefront-Backend-Udacity-ND-Project2/issues"

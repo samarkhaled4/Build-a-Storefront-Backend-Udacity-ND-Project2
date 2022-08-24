@@ -51,7 +51,19 @@ export class OrderStore {
             return result.rows[0];
         }
         catch(err){
-            throw new Error (`cann;t add Product ${productId} to order ${orderId} .Error ${err}`)
+            throw new Error (`cann't add Product ${productId} to order ${orderId} .Error ${err}`)
+        }
+    }
+    async delete(id:string){
+        try{
+            const conn=await Client.connect();
+            const sql='DELETE FROM orders WHERE id=($1)';
+            const result=await conn.query(sql,[id]);
+            conn.release();
+            return (result).rows[0];
+        }
+        catch(err){
+            throw new Error (`cann't delete order ${id} .Error ${err}`)
         }
     }
 }

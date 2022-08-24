@@ -2,6 +2,8 @@ import {Product,ProductStore} from "../models/product"
 
 const product=new ProductStore();
 
+const myProduct:Product={id:1,pname:'skirt',price:50}
+
 describe('Product model test',()=>{
   it('should have an index method', () => {
     expect(product.index).toBeDefined();
@@ -19,33 +21,17 @@ describe('Product model test',()=>{
     expect(product.delete).toBeDefined();
   });
   it('create method should add a product', async () => {
-    const result = await product.create({
-     id:1,
-     pname:'skirt',
-     price:50
-    });
-    expect(result).toEqual({
-      id: 1,
-      pname:'skirt',
-      price:50
-    });
+    const result = await product.create(myProduct);
+    expect(result).toEqual(myProduct);
   });
   it('index method should return an array of products',async()=>{
     const res=await product.index();
-    expect(res).toEqual([{
-        id: 1,
-        pname:'skirt',
-        price:50
-      }]);
+    expect(res).toEqual([myProduct]);
   });
   
   it('show method should return the correct product', async () => {
     const result = await product.show("1");
-    expect(result).toEqual({
-      id: 1,
-      pname:'skirt',
-      price:50
-    });
+    expect(result).toEqual(myProduct);
   });
 
   it('update method should update product',async()=>{

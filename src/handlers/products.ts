@@ -45,7 +45,7 @@ const ProductsRoute =(app:express.Application)=>{
     app.get('/products',index);
     app.get('/products/:id',show);
     app.post('/products',verifyAuthToken,create);
-    app.delete('/products/:id',destroy);
-    app.patch('/products/:id',update);
+    app.delete('/products/:id',verifyAuthToken,destroy);
+    app.patch('/products/:id',verifyAuthToken,update);
 }
 export default ProductsRoute;

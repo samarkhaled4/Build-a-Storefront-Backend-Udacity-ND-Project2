@@ -1,16 +1,35 @@
 import express,{Request,Response} from "express";
 import { Order,OrderStore } from "../models/order";
+import jwt,{JwtPayload} from "jsonwebtoken";
 import verifyAuthToken from "../middlewares/auth";
 
 const myOrder=new OrderStore();
+
+const tokenSecret=process.env.TOKEN_SECRET as string;
 
 const index=async(_req:Request,res:Response)=>{
     const orders=await myOrder.index();
     res.json(orders);
 }
 const show =async (req:Request,res:Response)=>{
-    const order= await myOrder.show(req.params.id);
-    res.json(order);
+    try{
+        const auth=req.headers.authorization as string;
+        const token=auth.split(' ')[1]
+        const decoded=jwt.verify(token,tokenSecret) as JwtPayload;
+        const wantedOrder=await myOrder.show(req.params.id)
+        if(decoded.addUser.id == wantedOrder.user_id){
+            const order=await myOrder.show(req.params.id);
+            res.json(order);
+        }
+        else{
+            res.json('Not Authorized to show the order with this ID !');
+            return
+        }
+    }
+    catch(err){
+        res.status(401);
+        res.json(`Unauthorized , Invalid token ${err}`);
+    }
 }
 const create=async(req:Request,res:Response)=>{
     const order:Order={
@@ -37,10 +56,31 @@ const addProduct=async(req:Request,res:Response)=>{
         res.status(400).json(err);
     }
 }
+const destroy =async(req:Request,res:Response)=>{
+    try{
+        const auth=req.headers.authorization as string;
+        const token=auth.split(' ')[1]
+        const decoded=jwt.verify(token,tokenSecret) as JwtPayload;
+        const wantedOrder=await myOrder.show(req.params.id)
+        if(decoded.addUser.id == wantedOrder.user_id){
+            const order=await myOrder.delete(req.params.id);
+            res.json(order);
+        }
+        else{
+            res.json('Not Authorized to delete the order with this ID !');
+            return
+        }
+    }
+    catch(err){
+        res.status(401);
+        res.json(`Unauthorized , Invalid token ${err}`);
+    }
+}
 const OrdersRoute = (app:express.Application)=>{
-    app.get('/orders',verifyAuthToken,index);
-    app.get('/orders/:id',show);
-    app.post('/orders',create);
-    app.post('/orders/:id/products',addProduct)
+    app.get('/orders',index);
+    app.get('/orders/:id',verifyAuthToken,show);
+    app.post('/orders',verifyAuthToken,create);
+    app.post('/orders/:id/products',verifyAuthToken,addProduct);
+    app.delete('/orders/:id',verifyAuthToken,destroy)
 }
 export default OrdersRoute;

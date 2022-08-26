@@ -11,12 +11,14 @@ This is a simple storeFront Backend project to have products in a store and by a
 * You can start node project by cloning existing project here in this repo 
 * Then you need to run `npm install` to get needed packages.
 * You need also run `db-migrate up` to run migrations onto your database .
+* To run the project you can write `npm run start`.
 #### Third : you need tool like postman to connect to your app on address `http://localhost:3000`.
 * You can db multiple things on postman to get and add data to the database as follows :
-> Note when you dd new user you will get a jwt string in responce's body which you need to send with header authorization prameter when you need to gget some data , 
+> Note when you dd new user you will get a jwt string in responce's body which you need to send with header authorization parameter when you need to gget some data , 
  (I refer here data to product or user or order).
-  * get >> to get all data.
-  * get/:id >> get info about specific product or user or order.
-  * post >> add a data.
-  * patch/id  >> edit info about specific data.
-  * delete/:id >> delete a specific data
+   * get >> to get all data.
+   * get/:id >> get info about specific product or user or order.
+   * post >> add a data.
+   * patch/id  >> edit info about specific data.
+   * delete/:id >> delete a specific data. 
+Finally you can test th project and make sure that all actions are well by run `npm run test`.

@@ -14,9 +14,9 @@ This is a simple storeFront Backend project to have products in a store and by a
 * You can start node project by cloning existing project here in this repo 
 * Then you need to run `npm install` to get needed packages or if you will start from scratch you need to install following packages : 
   > write `npm i` before each one 
-  `bcrypt` , `body-parser` , `db-migrate` , `db-migrate-pg` , `dotenv` , `express` , `nodemon` , `pg`
-  you need also foolwing packaged but write `npm i --save-dev` before each one
-  `@types/bcrypt` , `@types/express` , `@types/jasmine` , `@types/jsonwebtoken` , `@types/node` , `@types/pg` , `cross-env` , `jasmine` , `jasmine-spec-reporter` ,         `jsonwebtoken` , `ts-node` , `tsc-watch` , `typescript`.
+   * `bcrypt` , `body-parser` , `db-migrate` , `db-migrate-pg` , `dotenv` , `express` , `nodemon` , `pg`
+  > you need also foolwing packaged but write `npm i --save-dev` before each one
+   * `@types/bcrypt` , `@types/express` , `@types/jasmine` , `@types/jsonwebtoken` , `@types/node` , `@types/pg` , `cross-env` , `jasmine` , `jasmine-spec-reporter` ,         `jsonwebtoken` , `ts-node` , `tsc-watch` , `typescript`.
 * You need also run `db-migrate up` to run migrations onto your database .
 * To run the project you can write `npm run start`.
 

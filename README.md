@@ -9,6 +9,10 @@ This is a simple storeFront Backend project to have products in a store and by a
     and add these variables to **.env** file :
      * ENV , BCRYPT_PASSWORD , SALT_ROUNDS , TOKEN_SECRET.
   * You can then create a database which name in **.env** file with variable name of **POSTGRES_DB**.
+  > Note : these are schema needed for this project :
+    * products (id SERIAL PRIMARY KEY, pname VARCHAR(70), price FLOAT).
+    * users (id SERIAL PRIMARY KEY,firstname VARCHAR(50),lastname VARCHAR(50),password VARCHAR(70)).
+    * orders (id SERIAL PRIMARY KEY,status VARCHAR(50),user_id INTEGER REFERENCES users(id))
 
 #### Second : setup node project
 * You can start node project by cloning existing project here in this repo 
@@ -21,12 +25,21 @@ This is a simple storeFront Backend project to have products in a store and by a
 * To run the project you can write `npm run start`.
 
 #### Third : you need tool like postman to connect to your app on address `http://localhost:3000`.
-* You can db multiple things on postman to get and add data to the database as follows :
-> Note when you dd new user you will get a jwt string in responce's body which you need to send with header authorization parameter when you need to gget some data , 
- (I refer here data to product or user or order).
-   * get >> to get all data.
-   * get/:id >> get info about specific product or user or order.
-   * post >> add a data.
-   * patch/id  >> edit info about specific data.
-   * delete/:id >> delete a specific data. 
+* You can do multiple things on postman to get and add data to the database as follows (end points in my application) :
+ > Note: if mentioned that need auth you should send jwt that you received when creating the user in headers paameters
+   * get/users >> get all users (need auth). 
+   * get/users/:id >> get info about specific user (need auth).
+   * post/users >> add a user (you will get jwt string in body of responce which you will need later to get or add products or orders).
+   * patch/users/:id  >> edit info about specific user (need auth).
+   * delete/users/:id >> delete a specific user (need auth).
+   * get/products >> get all products.
+   * get/products/:id >> get info about specific product.
+   * post/products >> add a product (need auth).
+   * patch/products/:id  >> edit info about specific product (need auth).
+   * delete/products/:id >> delete a specific product (need auth).
+   * get/orders >> get all orders by a user. 
+   * get/orders/:id >> get info about specific order (need auth).
+   * post/orders >> add an order (need auth).
+   * post/orders/:id/products  >> add products to specific order (need auth).
+   * delete/orders/:id >> delete a specific order (need auth).
 Finally you can test th project and make sure that all actions are well by run `npm run test`.

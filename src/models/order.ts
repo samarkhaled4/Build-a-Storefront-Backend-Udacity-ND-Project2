@@ -57,6 +57,7 @@ export class OrderStore {
     async delete(id:string){
         try{
             const conn=await Client.connect();
+            await conn.query('DELETE FROM order_products WHERE order_id=($1)',[id]);
             const sql='DELETE FROM orders WHERE id=($1)';
             const result=await conn.query(sql,[id]);
             conn.release();

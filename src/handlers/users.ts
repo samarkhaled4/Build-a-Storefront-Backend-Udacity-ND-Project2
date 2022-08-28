@@ -90,9 +90,9 @@ const update=async (req:Request,res:Response)=>{
 }
 const UsersRoute =(app:express.Application)=>{
     app.get('/users',verifyAuthToken,index);
-    app.get('/users/:id',show);
+    app.get('/users/:id',verifyAuthToken,show);
     app.post('/users',create);
-    app.delete('/users/:id',destroy);
-    app.patch('/users/:id',update)
+    app.delete('/users/:id',verifyAuthToken,destroy);
+    app.patch('/users/:id',verifyAuthToken,update)
 }
 export default UsersRoute;

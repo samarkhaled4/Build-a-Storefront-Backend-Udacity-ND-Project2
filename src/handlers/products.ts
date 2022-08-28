@@ -5,12 +5,22 @@ import verifyAuthToken from "../middlewares/auth";
 const myProduct=new ProductStore();
 
 const index = async (_req:Request,res:Response)=>{
-    const products= await myProduct.index();
-    res.json(products);
+    try{
+        const products= await myProduct.index();
+        res.json(products);
+    }
+    catch(err){
+        res.status(400).json(err);
+    }
 }
 const show =async (req:Request,res:Response)=>{
-    const product= await myProduct.show(req.params.id);
-    res.json(product);
+    try{
+        const product= await myProduct.show(req.params.id);
+        res.json(product);
+    }
+    catch(err){
+        res.status(400).json(err);
+    }
 }
 const create =async (req:Request,res:Response)=>{
     const product:Product={
@@ -27,8 +37,13 @@ const create =async (req:Request,res:Response)=>{
     }
 }
 const destroy=async(req:Request,res:Response)=>{
-    const product=await myProduct.delete(req.params.id);
-    res.json(product);
+    try{
+        const product=await myProduct.delete(req.params.id);
+        res.json(product);
+    }
+    catch(err){
+        res.status(400).json(err);
+    }
 }
 const update=async (req:Request,res:Response)=>{
     //const pID=parseInt(req.params.id);

@@ -8,8 +8,13 @@ const myOrder=new OrderStore();
 const tokenSecret=process.env.TOKEN_SECRET as string;
 
 const index=async(_req:Request,res:Response)=>{
-    const orders=await myOrder.index();
-    res.json(orders);
+    try{
+        const orders=await myOrder.index();
+        res.json(orders);
+    }
+    catch(err){
+        res.status(400).json(err);
+    }
 }
 const show =async (req:Request,res:Response)=>{
     try{

@@ -6,8 +6,13 @@ import verifyAuthToken from "../middlewares/auth";
 const myUser=new UserStore();
 const tokenSecret=process.env.TOKEN_SECRET as string;
 const index = async (_req:Request,res:Response)=>{
-    const users= await myUser.index();
-    res.json(users);
+    try{
+        const users= await myUser.index();
+        res.json(users);
+    }
+    catch(err){
+        res.status(400).json(err);
+    }
 }
 const show =async (req:Request,res:Response)=>{
     try{

@@ -96,7 +96,7 @@ const OrdersRoute = (app:express.Application)=>{
     app.get('/orders',verifyAuthToken,index);
     app.get('/orders/:id',show);
     app.post('/orders',verifyAuthToken,create);
-    app.post('/orders/:id/products',verifyAuthToken,addProduct);
+    app.post('/orders/:id/products',addProduct);
     app.delete('/orders/:id',destroy)
 }
 export default OrdersRoute;

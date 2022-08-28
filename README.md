@@ -18,9 +18,9 @@ This is a simple storeFront Backend project to have products in a store and by a
 #### Second : setup node project
 * You can start node project by cloning existing project here in this repo.
 * You then need to add file  **.env** file to your project with following variables related to database we created :
-   * PORT:3000 (which Node project built on), POSTGRES_HOST(localhost) , POSTGRES_USER(postgres) , POSTGRES_PASSWORD(123) , POSTGRES_PORT:5432.
+   * `PORT:3000` (which Node project built on), `POSTGRES_HOST`(localhost) , `POSTGRES_USER`(postgres) , `POSTGRES_PASSWORD`(123) , `POSTGRES_PORT:5432`.
    - also you need to add these variables but with values that you want :
-   * ENV(dev or test regarding to your perpose to develop or test) , BCRYPT_PASSWORD , SALT_ROUNDS , TOKEN_SECRET. 
+   * `ENV`(dev or test regarding to your perpose to develop or test) , `BCRYPT_PASSWORD` , `SALT_ROUNDS` , `TOKEN_SECRET`. 
 * Then you need to run `npm install` to get needed packages or if you will start from scratch you need to install following packages : 
   > write `npm i` before each one 
    * `bcrypt` , `body-parser` , `db-migrate` , `db-migrate-pg` , `dotenv` , `express` , `nodemon` , `pg`

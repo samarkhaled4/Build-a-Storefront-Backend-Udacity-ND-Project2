@@ -4,7 +4,9 @@ The company stakeholders want to create an online storefront to showcase their g
 These are the notes from a meeting with the frontend developer that describe what endpoints the API needs to supply, as well as data shapes the frontend and backend have agreed meet the requirements of the application. 
 
 ## API Endpoints
-Here are the Crud operations need for our route and also needed hhtp verbs needs for these operations :
+Here are the Crud operations need for our route and also needed http verbs needs for these operations :
+> Note: if mentioned that [token required] so you need to send the jwt string (that you received in body of the responce while creating a new user) in HEADERS with key-value of {Authorization:Bearer jwtstring}.
+
 #### Products
 - Index 
 - Show

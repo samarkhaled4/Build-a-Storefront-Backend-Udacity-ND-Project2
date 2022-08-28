@@ -54,11 +54,22 @@ const addProduct=async(req:Request,res:Response)=>{
     const productId:string=req.body.product_id;
     const quantity:number=parseInt(req.body.quantity);
     try{
-        const addedProduct=await myOrder.addProduct(quantity,productId,orderId);
-        res.json(addedProduct);
+        const auth=req.headers.authorization as string;
+        const token=auth.split(' ')[1]
+        const decoded=jwt.verify(token,tokenSecret) as JwtPayload;
+        const wantedOrder=await myOrder.show(req.params.id);
+        if(decoded.addUser.id == wantedOrder.user_id){
+            const addedProduct=await myOrder.addProduct(quantity,productId,orderId);
+            res.json(addedProduct);
+        }
+        else{
+            res.json('Not Authorized to add products to the order with this ID !');
+            return
+        }
     }
     catch(err){
-        res.status(400).json(err);
+        res.status(401);
+        res.json(`Unauthorized , Invalid token ${err}`);
     }
 }
 const destroy =async(req:Request,res:Response)=>{
@@ -82,10 +93,10 @@ const destroy =async(req:Request,res:Response)=>{
     }
 }
 const OrdersRoute = (app:express.Application)=>{
-    app.get('/orders',index);
-    app.get('/orders/:id',verifyAuthToken,show);
+    app.get('/orders',verifyAuthToken,index);
+    app.get('/orders/:id',show);
     app.post('/orders',verifyAuthToken,create);
     app.post('/orders/:id/products',verifyAuthToken,addProduct);
-    app.delete('/orders/:id',verifyAuthToken,destroy)
+    app.delete('/orders/:id',destroy)
 }
 export default OrdersRoute;

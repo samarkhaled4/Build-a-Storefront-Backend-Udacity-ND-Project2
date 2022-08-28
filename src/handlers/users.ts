@@ -5,6 +5,7 @@ import verifyAuthToken from "../middlewares/auth";
 
 const myUser=new UserStore();
 const tokenSecret=process.env.TOKEN_SECRET as string;
+
 const index = async (_req:Request,res:Response)=>{
     try{
         const users= await myUser.index();
@@ -91,7 +92,7 @@ const UsersRoute =(app:express.Application)=>{
     app.get('/users',verifyAuthToken,index);
     app.get('/users/:id',show);
     app.post('/users',create);
-    app.delete('/users/:id',verifyAuthToken,destroy);
-    app.patch('/users/:id',verifyAuthToken,update)
+    app.delete('/users/:id',destroy);
+    app.patch('/users/:id',update)
 }
 export default UsersRoute;

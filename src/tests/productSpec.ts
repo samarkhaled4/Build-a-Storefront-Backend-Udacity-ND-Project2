@@ -2,7 +2,7 @@ import {Product,ProductStore} from "../models/product"
 
 const product=new ProductStore();
 
-const myProduct:Product={id:2,pname:'skirt',price:50}
+const myProduct:Product={id:4,pname:'skirt',price:50}
 
 describe('Product model test',()=>{
   it('should have an index method', () => {
@@ -24,38 +24,30 @@ describe('Product model test',()=>{
     const result = await product.create(myProduct);
     expect(result).toEqual(myProduct);
   });
-  it('index method should return an array of products',async()=>{
+  it('index method should return an array contains added product',async()=>{
     const res=await product.index();
-    //console.log(res);
-    expect(res).toEqual([
-      {id:1,
-      pname:'t-shirt',
-      price:50},
-      {id:2,
-      pname:'skirt',
-      price:50}]);
-  });
+    expect(res).toContain(myProduct);
+    });
   
   it('show method should return the correct product', async () => {
-    const result = await product.show("2");
+    const result = await product.show("4");
     expect(result).toEqual(myProduct);
   });
 
   it('update method should update product',async()=>{
-    const myproduct=await product.show("2");
+    const myproduct=await product.show("4");
     const values={"price":30};
     const updated=await product.update(myproduct,values);
     expect(updated).toEqual({
-      id:2,
+      id:4,
       pname:'skirt',
       price:30
     })
   });
 
   it('delete method should remove the product', async () => {
-    await product.delete("2");
-    await product.delete("1");
+    await product.delete("4");
     const result = await product.index()
-    expect(result).toEqual([]);
+    expect(result).not.toContain({id:4,pname:'skirt',price:30});
   })   
 })

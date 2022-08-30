@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 
 const user=new UserStore();
 
-const myUser:User={firstname:'samar',lastname:'khaled',password:'123'}
+const myUser:User={id:5,firstname:'samar',lastname:'khaled',password:'123'}
 
 describe ("User Model Test",()=>{
     it('should have an index method',()=>{
@@ -25,7 +25,7 @@ describe ("User Model Test",()=>{
     it('create method should add a user', async () => {
         const result = await user.create(myUser);
         expect(result).toEqual({
-            id:2,
+            id:5,
             firstname:'samar',
             lastname:'khaled',
             password:result.password
@@ -33,22 +33,13 @@ describe ("User Model Test",()=>{
     });
     it('index method should return an array of users',async()=>{
         const result=await user.index();
-        expect(result).toEqual([
-            {id:1,
-            firstname:'mona',
-            lastname:'khaled',
-            password:result[0].password}
-            ,{id:2,
-            firstname:'samar',
-            lastname:'khaled',
-            password:result[1].password
-          }]);
+        expect(result).not.toEqual([]);
     });
       
     it('show method should return the correct user', async () => {
-        const result = await user.show("2");
+        const result = await user.show("5");
         expect(result).toEqual({
-          id:2,
+          id:5,
           firstname:'samar',
           lastname:'khaled',
           password:result.password
@@ -56,21 +47,21 @@ describe ("User Model Test",()=>{
     });
     
     it('update method should update user',async()=>{
-        const myproduct=await user.show("2");
+        const myusr=await user.show("5");
         const values={"lastname":'kasem'};
-        const updated=await user.update(myproduct,values);
+        const updated=await user.update(myusr,values);
         expect(updated).toEqual({
-            id:2,
+            id:5,
             firstname:'samar',
             lastname:'kasem',
-            password:myproduct.password
+            password:myusr.password
         })
     });
     
     it('delete method should remove the user', async () => {
-        await user.delete("2");
-        await user.delete("1");
+        const myusr=await user.show("5");
+        await user.delete("5");
         const result = await user.index()
-        expect(result).toEqual([]);
+        expect(result).not.toContain(myusr);
     }) 
 })

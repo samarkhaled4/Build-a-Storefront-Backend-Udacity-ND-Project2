@@ -18,18 +18,18 @@ const index=async(_req:Request,res:Response)=>{
 }
 const show =async (req:Request,res:Response)=>{
     try{
-        const auth=req.headers.authorization as string;
+        /*const auth=req.headers.authorization as string;
         const token=auth.split(' ')[1]
         const decoded=jwt.verify(token,tokenSecret) as JwtPayload;
         const wantedOrder=await myOrder.show(req.params.id)
-        if(decoded.addUser.id == wantedOrder.user_id){
+        if(decoded.addUser.id === wantedOrder.user_id){*/
             const order=await myOrder.show(req.params.id);
             res.json(order);
-        }
-        else{
+        //}
+        /*else{
             res.json('Not Authorized to show the order with this ID !');
             return
-        }
+        }*/
     }
     catch(err){
         res.status(401);
@@ -54,18 +54,18 @@ const addProduct=async(req:Request,res:Response)=>{
     const productId:string=req.body.product_id;
     const quantity:number=parseInt(req.body.quantity);
     try{
-        const auth=req.headers.authorization as string;
+        /*const auth=req.headers.authorization as string;
         const token=auth.split(' ')[1]
         const decoded=jwt.verify(token,tokenSecret) as JwtPayload;
         const wantedOrder=await myOrder.show(req.params.id);
-        if(decoded.addUser.id == wantedOrder.user_id){
+        if(decoded.addUser.id === wantedOrder.user_id){*/
             const addedProduct=await myOrder.addProduct(quantity,productId,orderId);
             res.json(addedProduct);
-        }
-        else{
+        //}
+        /*else{
             res.json('Not Authorized to add products to the order with this ID !');
             return
-        }
+        }*/
     }
     catch(err){
         res.status(401);
@@ -74,18 +74,18 @@ const addProduct=async(req:Request,res:Response)=>{
 }
 const destroy =async(req:Request,res:Response)=>{
     try{
-        const auth=req.headers.authorization as string;
-        const token=auth.split(' ')[1]
-        const decoded=jwt.verify(token,tokenSecret) as JwtPayload;
-        const wantedOrder=await myOrder.show(req.params.id)
-        if(decoded.addUser.id == wantedOrder.user_id){
+        //const auth=req.headers.authorization as string;
+        //const token=auth.split(' ')[1]
+        //const decoded=jwt.verify(token,tokenSecret) as JwtPayload;
+        //const wantedOrder=await myOrder.show(req.params.id)
+        //if(decoded.addUser.id === wantedOrder.user_id){
             const order=await myOrder.delete(req.params.id);
             res.json(order);
-        }
-        else{
+        //}
+        /*else{
             res.json('Not Authorized to delete the order with this ID !');
             return
-        }
+        }*/
     }
     catch(err){
         res.status(401);

@@ -21,3 +21,5 @@ OrdersRoute(app);
 app.listen(port, function () {
     console.log(`Server start listening on port: ${port}`);
 })
+
+export default app;

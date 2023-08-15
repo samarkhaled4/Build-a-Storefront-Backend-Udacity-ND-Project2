@@ -32,4 +32,4 @@ This is a simple storeFront Backend project to have products in a store and by a
 #### Third : you need tool like postman to connect to your app on address `http://localhost:3000`.
 * You can do multiple things on postman to get and add data to the database.
 
-**Finally** you can test th project and make sure that all actions are well by run `npm run test`.
+**Finally** you can test the project and make sure that all actions are well by run `npm run test`.
